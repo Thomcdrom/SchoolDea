@@ -15,7 +15,7 @@ import nl.Icaprojecten.ci.Spotitube.User;
         @Consumes(MediaType.APPLICATION_JSON)
         @Produces(MediaType.APPLICATION_JSON)
         public User postLogin(User user){
-            //TODO make it return UserDAO
+            //TODO make it return UserDTO
             return user;
         }
     }

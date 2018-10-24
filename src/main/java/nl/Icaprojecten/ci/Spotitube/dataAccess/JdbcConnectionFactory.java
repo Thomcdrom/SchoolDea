@@ -8,7 +8,6 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class JdbcConnectionFactory {
-    private static Logger logger = Logger.getLogger(JdbcConnectionFactory.class.getName());
     private Properties properties;
 
     public JdbcConnectionFactory()
@@ -23,9 +22,9 @@ public class JdbcConnectionFactory {
             this.properties.load(getClass().getClassLoader().getResourceAsStream("database.properties"));
             Class.forName(properties.getProperty("driver"));
         } catch (ClassNotFoundException e) {
-            logger.severe(e.getMessage());
+            System.out.println(e.getMessage());
         } catch (IOException e) {
-            logger.severe(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
     }
@@ -33,9 +32,9 @@ public class JdbcConnectionFactory {
     public Connection create()
     {
         try {
-            return DriverManager.getConnection(properties.getProperty("databaseurl") + "?user=" + properties.getProperty("user") + "&password=" + properties.getProperty("password"));
+            return DriverManager.getConnection(properties.getProperty("databaseurl") + "?user=" + properties.getProperty("user") + "&password=" + properties.getProperty("password")+"&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
         } catch (SQLException e) {
-            logger.severe(e.getMessage());
+            System.out.println(e.getMessage());
         }
         return null;
     }

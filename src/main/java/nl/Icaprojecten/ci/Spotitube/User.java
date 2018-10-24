@@ -1,5 +1,6 @@
 package nl.Icaprojecten.ci.Spotitube;
 
+import javax.inject.Inject;
 import java.util.UUID;
 
 public class User {
@@ -7,10 +8,13 @@ public class User {
     private String password;
     private java.util.UUID UUID;
 
-    //TODO make DTO for this class with Name and Token
+    @Inject
+    Auth auth;
+
     public User(String password, String user) {
         this.user = user;
         this.password = password;
+        this.UUID = auth.generateToken();
     }
 
     public User() {

@@ -4,10 +4,9 @@ import java.util.UUID;
 
 public class Auth {
 
-    private UUID generateToken(){
+    public UUID generateToken(){
+            System.out.println(UUID.randomUUID());
         return  UUID.randomUUID();
     }
 
-    //TODO make token generator function
-    //TODO make function that updates token in DB
 }

@@ -12,7 +12,7 @@
 
 .idea/
 targe/
-spotitube.iml
+*.iml
 
 # Package Files #
 *.jar

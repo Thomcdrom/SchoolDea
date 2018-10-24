@@ -1,10 +1,13 @@
 package nl.Icaprojecten.ci.Spotitube;
 
+import java.util.UUID;
+
 public class User {
     private String user;
     private String password;
+    private java.util.UUID UUID;
 
-    //TODO make DOA for this class with Name and Token
+    //TODO make DTO for this class with Name and Token
     public User(String password, String user) {
         this.user = user;
         this.password = password;
@@ -27,6 +30,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UUID getUUID() {
+        return UUID;
     }
 
     //TODO make user validate with database

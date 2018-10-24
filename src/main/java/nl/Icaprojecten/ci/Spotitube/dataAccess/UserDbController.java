@@ -16,8 +16,10 @@ public class UserDbController {
         Connection connection = jdbcConnectionFactory.create();
 
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO items VALUES (NULL, ? , ? , ?)");
-            preparedStatement.setString(1, entity.getSku());
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE User SET UUID=? WHERE Username = ? AND Password = ?)");
+            preparedStatement.setString(1, user.getUUID().toString());
+            preparedStatement.setString(2, user.getUser());
+            preparedStatement.setString(3, user.getPassword());
             preparedStatement.executeUpdate();
             connection.close();
         }

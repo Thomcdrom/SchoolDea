@@ -29,6 +29,7 @@ import nl.Icaprojecten.ci.Spotitube.dataAccess.UserDbController;
                 User loginUser = database.checkLoginDetails(user);
                 return Response.status(201).entity(Json.createObjectBuilder()
                         .add("token", loginUser.getUUID().toString())
+                        .add("user", loginUser.getName())
                         .build()).build();
             }
             catch (UserNotUpdatedExeption e){

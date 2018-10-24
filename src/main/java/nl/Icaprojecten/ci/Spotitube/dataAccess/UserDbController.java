@@ -24,15 +24,16 @@ public class UserDbController {
             preparedStatement.setString(2, user.getPassword());
 
             ResultSet rs = preparedStatement.executeQuery();
-            User user = userBuilder(rs);
+            user = userBuilder(rs);
             connection.close();
 
             insertUserToken(user);
-            return user;
+
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return user;
     }
 
     private void insertUserToken(User user) throws UserNotUpdatedExeption{
@@ -58,7 +59,7 @@ public class UserDbController {
 
     private User userBuilder(ResultSet rs) throws SQLException {
             rs.first();
-            return new User(rs.getString("Password"),rs.getString("Username"));
+            return new User(rs.getString("Password"),rs.getString("Username"),rs.getString("Name"));
     }
 
     //TODO write user queries

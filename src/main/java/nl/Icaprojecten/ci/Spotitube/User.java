@@ -6,14 +6,16 @@ import java.util.UUID;
 public class User {
     private String user;
     private String password;
+    private String name;
     private java.util.UUID UUID;
 
     @Inject
     Auth auth;
 
-    public User(String password, String user) {
+    public User(String password, String user, String name) {
         this.user = user;
         this.password = password;
+        this.name = name;
         this.UUID = auth.generateToken();
     }
 
@@ -40,6 +42,13 @@ public class User {
         return UUID;
     }
 
-    //TODO make user validate with database
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+//TODO make user validate with database
     //TODO make user generate token
 }

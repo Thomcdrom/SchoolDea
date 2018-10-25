@@ -28,6 +28,7 @@ public class UserDbController {
             preparedStatement.setString(2, user.getPassword());
 
             ResultSet rs = preparedStatement.executeQuery();
+            rs.first();
             user = userBuilder(rs);
             connection.close();
 
@@ -62,7 +63,6 @@ public class UserDbController {
     }
 
     private User userBuilder(ResultSet rs) throws SQLException {
-            rs.first();
             return new User(rs.getString("Password"),rs.getString("Username"),rs.getString("Name"), auth.generateToken());
     }
 

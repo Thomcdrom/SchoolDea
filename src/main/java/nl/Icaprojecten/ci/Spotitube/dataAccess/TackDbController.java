@@ -16,12 +16,23 @@ public class TackDbController {
     private JdbcConnectionFactory jdbcConnectionFactory;
 
     public Playlist getTracksFromPlaylist(Playlist playlist){
-
         ArrayList<Track> tracks = new ArrayList<>();
         Connection connection = jdbcConnectionFactory.create();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM User WHERE Username = ? and Password = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idTracks, Title, Preformer, Album, Playcount, PublicationDate, Offlineplay" +
+                    "FROM Tracks" +
+                    "INNER JOIN Playlist_has_Tracks" +
+                    "ON Tracks.idTracks = Playlist_has_Tracks.Tracks_idTracks " +
+                    "Where Playlist_idPlaylist  = ?"
+            );
+            preparedStatement.setInt(1,playlist.getID());
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                tracks.add(trackBuilder(rs));
+            }
+            playlist.setTracks(tracks);
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -30,6 +41,6 @@ public class TackDbController {
     }
 
     private Track trackBuilder(ResultSet rs) throws SQLException {
-        
+            return new Track(rs.getInt("idTracks"),rs.getString("Title"),rs.getString("Preformer"),rs.getString("Album"),rs.getInt("Playcount"),rs.getString("PublicationDate"),rs.getString("Offlineplay"));
     }
 }

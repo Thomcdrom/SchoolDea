@@ -1,7 +1,7 @@
 package nl.Icaprojecten.ci.Spotitube.DTO;
 
 public class Track {
-    private int idTracks;
+    private int idTrack;
     private String title;
     private String performer;
     private String album;
@@ -10,8 +10,8 @@ public class Track {
     private String offlineplay;
     private int lenght;
 
-    public Track(int idTracks, String title, String performer, String album, int playcount, String publicationDate, String offlineplay, int lenght) {
-        this.idTracks = idTracks;
+    public Track(int idTrack, String title, String performer, String album, int playcount, String publicationDate, String offlineplay, int lenght) {
+        this.idTrack = idTrack;
         this.title = title;
         this.performer = performer;
         this.album = album;
@@ -24,12 +24,12 @@ public class Track {
     public Track() {
     }
 
-    public int getIdTracks() {
-        return idTracks;
+    public int getIdTrack() {
+        return idTrack;
     }
 
-    public void setIdTracks(int idTracks) {
-        this.idTracks = idTracks;
+    public void setIdTrack(int idTrack) {
+        this.idTrack = idTrack;
     }
 
     public String getTitle() {

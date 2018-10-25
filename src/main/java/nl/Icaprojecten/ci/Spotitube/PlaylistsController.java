@@ -57,6 +57,8 @@ public class PlaylistsController {
     public Response addPlaylist(@QueryParam("token") String token, Playlist playlist){
         try{
             authHelper.CheckToken(token);
+
+            playlistdb.createPlaylist(playlist,token);
             playlistdb.createPlaylist(playlist, token);
 
         }catch (TokenNotFoundExeption e){ return Response.status(403).entity("Invalid token").build();}

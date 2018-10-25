@@ -6,13 +6,13 @@ public class Playlist {
 
     private int ID;
     private String name;
-    private boolean owner;
+    private int ownerid;
     private List<Track> tracks;
 
-    public Playlist(int ID, String name, boolean owner, List<Track> tracks) {
+    public Playlist(int ID, String name, int owner, List<Track> tracks) {
         this.ID = ID;
         this.name = name;
-        this.owner = owner;
+        this.ownerid = owner;
         this.tracks = tracks;
     }
 
@@ -35,12 +35,12 @@ public class Playlist {
         this.name = name;
     }
 
-    public boolean isOwner() {
-        return owner;
+    public int getOwnerid() {
+        return ownerid;
     }
 
-    public void setOwner(boolean owner) {
-        this.owner = owner;
+    public void setOwnerid(int ownerid) {
+        this.ownerid = ownerid;
     }
 
     public List<Track> getTracks() {

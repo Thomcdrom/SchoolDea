@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TackDbController {
+public class TrackDbController {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
@@ -20,12 +20,7 @@ public class TackDbController {
         Connection connection = jdbcConnectionFactory.create();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idTracks, Title, Preformer, Album, Playcount, PublicationDate, Offlineplay" +
-                    "FROM Tracks" +
-                    "INNER JOIN Playlist_has_Tracks" +
-                    "ON Tracks.idTracks = Playlist_has_Tracks.Tracks_idTracks " +
-                    "Where Playlist_idPlaylist  = ?"
-            );
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idTracks, Title, Preformer, Album, Playcount, PublicationDate, Offlineplay FROM Tracks INNER JOIN Playlist_has_Tracks ON Tracks.idTracks = Playlist_has_Tracks.Tracks_idTracks Where Playlist_idPlaylist  = ?");
             preparedStatement.setInt(1,playlist.getID());
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -41,6 +36,7 @@ public class TackDbController {
     }
 
     private Track trackBuilder(ResultSet rs) throws SQLException {
-            return new Track(rs.getInt("idTracks"),rs.getString("Title"),rs.getString("Preformer"),rs.getString("Album"),rs.getInt("Playcount"),rs.getString("PublicationDate"),rs.getString("Offlineplay"));
+        //TODO fix database and replace the 1 on the end
+            return new Track(rs.getInt("idTracks"),rs.getString("Title"),rs.getString("Preformer"),rs.getString("Album"),rs.getInt("Playcount"),rs.getString("PublicationDate"),rs.getString("Offlineplay"), 1);
     }
 }

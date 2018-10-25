@@ -6,13 +6,13 @@ public class User {
     private String user;
     private String password;
     private String name;
-    private java.util.UUID UUID;
+    private java.util.UUID token;
 
     public User(String password, String user, String name, UUID uuid) {
         this.user = user;
         this.password = password;
         this.name = name;
-        this.UUID = uuid;
+        this.token = uuid;
     }
 
     public User() {
@@ -34,8 +34,12 @@ public class User {
         this.password = password;
     }
 
-    public UUID getUUID() {
-        return UUID;
+    public UUID getToken() {
+        return token;
+    }
+
+    public void setToken(UUID token) {
+        this.token = token;
     }
 
     public String getName() {

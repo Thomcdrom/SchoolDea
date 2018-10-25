@@ -8,8 +8,9 @@ public class Track {
     private int playcount;
     private String publicationDate;
     private String offlineplay;
+    private int lenght;
 
-    public Track(int idTracks, String title, String performer, String album, int playcount, String publicationDate, String offlineplay) {
+    public Track(int idTracks, String title, String performer, String album, int playcount, String publicationDate, String offlineplay, int lenght) {
         this.idTracks = idTracks;
         this.title = title;
         this.performer = performer;
@@ -17,6 +18,7 @@ public class Track {
         this.playcount = playcount;
         this.publicationDate = publicationDate;
         this.offlineplay = offlineplay;
+        this.lenght = lenght;
     }
 
     public Track() {
@@ -76,5 +78,13 @@ public class Track {
 
     public void setOfflineplay(String offlineplay) {
         this.offlineplay = offlineplay;
+    }
+
+    public int getLenght() {
+        return lenght;
+    }
+
+    public void setLenght(int lenght) {
+        this.lenght = lenght;
     }
 }

@@ -2,6 +2,7 @@ package nl.Icaprojecten.ci.Spotitube.dataAccess;
 
 import nl.Icaprojecten.ci.Spotitube.Helper.Auth;
 import nl.Icaprojecten.ci.Spotitube.DTO.User;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
 
 import javax.inject.Inject;
@@ -18,6 +19,30 @@ public class UserDbController {
 
     @Inject
     private Auth auth;
+
+    public boolean validateUser(String token) throws TokenNotFoundExeption{
+        Connection connection = jdbcConnectionFactory.create();
+
+        try {
+            int count = 0;
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT 1 FROM User WHERE UUID = ?;" );
+            preparedStatement.setString(1, token);
+
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                count = res.getInt(1);
+            }
+            connection.close();
+            if (count <= 0){
+                throw new TokenNotFoundExeption(token);
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
 
     public User checkLoginDetails(User user) throws UserNotUpdatedExeption{
         Connection connection = jdbcConnectionFactory.create();
@@ -46,7 +71,7 @@ public class UserDbController {
 
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE User SET UUID=? WHERE Username = ? AND Password = ?");
-            preparedStatement.setString(1, user.getUUID().toString());
+            preparedStatement.setString(1, user.getToken().toString());
             preparedStatement.setString(2, user.getUser());
             preparedStatement.setString(3, user.getPassword());
             int count = preparedStatement.executeUpdate();

@@ -1,6 +1,7 @@
 package nl.Icaprojecten.ci.Spotitube.dataAccess;
 
-import nl.Icaprojecten.ci.Spotitube.User;
+import nl.Icaprojecten.ci.Spotitube.Helper.Auth;
+import nl.Icaprojecten.ci.Spotitube.DTO.User;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
 
 import javax.inject.Inject;
@@ -14,6 +15,9 @@ public class UserDbController {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
+
+    @Inject
+    private Auth auth;
 
     public User checkLoginDetails(User user) throws UserNotUpdatedExeption{
         Connection connection = jdbcConnectionFactory.create();
@@ -59,7 +63,7 @@ public class UserDbController {
 
     private User userBuilder(ResultSet rs) throws SQLException {
             rs.first();
-            return new User(rs.getString("Password"),rs.getString("Username"),rs.getString("Name"));
+            return new User(rs.getString("Password"),rs.getString("Username"),rs.getString("Name"), auth.generateToken());
     }
 
     //TODO write user queries

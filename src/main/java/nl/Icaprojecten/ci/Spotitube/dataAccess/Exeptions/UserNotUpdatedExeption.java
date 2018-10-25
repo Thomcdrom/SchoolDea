@@ -1,6 +1,6 @@
 package nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions;
 
-import nl.Icaprojecten.ci.Spotitube.User;
+import nl.Icaprojecten.ci.Spotitube.DTO.User;
 
 public class UserNotUpdatedExeption extends Exception {
 

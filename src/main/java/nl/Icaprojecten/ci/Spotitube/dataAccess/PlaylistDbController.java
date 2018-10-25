@@ -35,7 +35,7 @@ public class PlaylistDbController {
 
     public void deletePlaylist( int playlistID, String token) throws PlaylistNotDeletedExpetion{
         Connection connection = jdbcConnectionFactory.create();
-
+//TODO Add Owner check when database allows
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM User_has_Playlist where Playlist_idPlaylist = ? and User_idUser = (Select idUser FROM user where UUID = ?) ");
             preparedStatement.setInt(1, playlistID);
@@ -46,9 +46,12 @@ public class PlaylistDbController {
             if(count <= 0){
                 throw new PlaylistNotDeletedExpetion();
             }
-            connection.close();
 
             if(isAlone(playlistID)) {
+                preparedStatement = connection.prepareStatement("DELETE FROM Playlist_has_Tracks where Playlist_idPlaylist = ? ");
+                preparedStatement.setInt(1, playlistID);
+                preparedStatement.executeUpdate();
+
                 preparedStatement = connection.prepareStatement("DELETE FROM Playlist where idPlaylist = ? ");
                 preparedStatement.setInt(1, playlistID);
                 preparedStatement.executeUpdate();
@@ -61,13 +64,29 @@ public class PlaylistDbController {
         }
     }
 
+    public void createPlaylist(Playlist playlist, String token){
+        Connection connection = jdbcConnectionFactory.create();
+        try{
+            PreparedStatement preparedStatement = connection
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private boolean isAlone(int playlistID){
         Connection connection = jdbcConnectionFactory.create();
 
         try{
+            int count = 0;
+
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT 1 from User_has_Playlist where Playlist_idPlaylist = ?");
             preparedStatement.setInt(1, playlistID);
-            int count = preparedStatement.executeUpdate();
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                count = res.getInt(1);
+            }
 
             if(count <= 0){
                 return true;

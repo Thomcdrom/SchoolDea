@@ -8,11 +8,11 @@ public class User {
     private String name;
     private java.util.UUID token;
 
-    public User(String password, String user, String name, UUID uuid) {
+    public User(String password, String user, String name) {
         this.user = user;
         this.password = password;
         this.name = name;
-        this.token = uuid;
+        this.token = generateToken();
     }
 
     public User() {
@@ -49,6 +49,9 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-//TODO make user validate with database
-    //TODO make user generate token
+
+    private UUID generateToken(){
+        return  UUID.randomUUID();
+    }
+
 }

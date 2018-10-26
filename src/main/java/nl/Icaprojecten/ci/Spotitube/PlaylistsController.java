@@ -39,7 +39,8 @@ public class PlaylistsController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addPlaylist(@QueryParam("token") String token, Playlist playlist){
+    public Response addPlaylist(@QueryParam("token") String token,
+                                Playlist playlist){
         try{
             authHelper.CheckToken(token);
             playlistdb.createPlaylist(playlist,token);
@@ -53,7 +54,9 @@ public class PlaylistsController {
 
     @Path("/{id}")
     @DELETE
-    public Response deletePlaylist (@QueryParam("token") String token, @PathParam("id") int ID){
+    public Response deletePlaylist(
+            @QueryParam("token") String token,
+            @PathParam("id") int ID){
         try{
             authHelper.CheckToken(token);
             playlistdb.deletePlaylist(ID, token);
@@ -67,7 +70,9 @@ public class PlaylistsController {
 
     @Path("/{id}")
     @PUT
-    public Response editPlaylist (@QueryParam("token") String token, @PathParam("id") int ID, Playlist playlist){
+    public Response editPlaylist(@QueryParam("token") String token,
+                                 @PathParam("id") int ID,
+                                 Playlist playlist){
         try{
             authHelper.CheckToken(token);
 

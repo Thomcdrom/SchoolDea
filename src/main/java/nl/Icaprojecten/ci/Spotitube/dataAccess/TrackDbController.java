@@ -61,6 +61,25 @@ public class TrackDbController {
         return tracks;
     }
 
+    public void deleteTrackFromPlaylist(int trackID, int playlistID){
+        Connection connection = jdbcConnectionFactory.create();
+
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Playlist_has_Tracks WHERE Tracks_idTracks = ? AND Playlist_idPlaylist = ? ");
+            preparedStatement.setInt(1,trackID);
+            preparedStatement.setInt(2,playlistID);
+
+            int count = preparedStatement.executeUpdate();
+
+            if(count <=0){
+                //TODO return Exeption here
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private Track trackBuilder(ResultSet rs) throws SQLException {
         //TODO fix database and replace the 1 on the end
         //TODO fix database so that it accepts DD-MM-YYYY

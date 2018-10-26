@@ -1,18 +1,13 @@
 package nl.Icaprojecten.ci.Spotitube;
 
-import nl.Icaprojecten.ci.Spotitube.DTO.Collections.Tracks;
-import nl.Icaprojecten.ci.Spotitube.DTO.Track;
 import nl.Icaprojecten.ci.Spotitube.Helper.AuthHelper;
+import nl.Icaprojecten.ci.Spotitube.Helper.TrackHelper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.TrackDbController;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 @Path("/playlists/{playlistid}/tracks")
 public class TracksInPlaylistController {
@@ -21,21 +16,37 @@ public class TracksInPlaylistController {
     AuthHelper authHelper;
 
     @Inject
+    TrackHelper helper;
+
+    @Inject
     TrackDbController trackDb;
 
     @Path("/")
     @GET
-    public Response getTracksFromPlaylist(@PathParam("playlistid") int playlistID, @QueryParam("token") String token){
-        Tracks tracks = new Tracks();
+    public Response getTracksFromPlaylist(
+            @PathParam("playlistid") int playlistID,
+            @QueryParam("token") String token){
         try{
             authHelper.CheckToken(token);
 
-            ArrayList<Track> tracklist = trackDb.getTracksFromPlaylist(playlistID).getTracks();
+        }catch (TokenNotFoundExeption e){ return Response.status(403).entity("Invalid token").build();}
 
-            tracks.setTracks(tracklist);
-        }catch (TokenNotFoundExeption e){ return javax.ws.rs.core.Response.status(403).entity("Invalid token").build();}
-
-        return javax.ws.rs.core.Response.status(200).entity(tracks).build();
+        return Response.status(200).entity(helper.trackCreator(playlistID)).build();
     }
 
+    @Path("/{trackid}")
+    @DELETE
+    public Response deleteTrackFromPlaylist(
+            @PathParam("playlistid") int playlistID,
+            @PathParam("trackid") int trackID,
+            @QueryParam("token") String token){
+        try{
+            authHelper.CheckToken(token);
+
+            trackDb.deleteTrackFromPlaylist(trackID,playlistID);
+        }
+        catch (TokenNotFoundExeption e){ return Response.status(403).entity("Invalid token").build();}
+
+        return Response.status(200).entity(helper.trackCreator(playlistID)).build();
+    }
 }

@@ -22,7 +22,9 @@ public class TrackController {
 
     @Path("/")
     @GET
-    public Response getAvalibleSongs(@QueryParam("forPlaylist") int playlistID, @QueryParam("token") String token){
+    public Response getAvalibleSongs(
+            @QueryParam("forPlaylist") int playlistID,
+            @QueryParam("token") String token){
         Tracks tracks = new Tracks();
         try{
             authHelper.CheckToken(token);

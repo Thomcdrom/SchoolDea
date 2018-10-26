@@ -23,7 +23,7 @@ public class TracksInPlaylistController {
     @Inject
     TrackDbController trackDb;
 
-    @Path("/tracks")
+    @Path("/")
     @GET
     public Response getTracksFromPlaylist(@PathParam("playlistid") int playlistID, @QueryParam("token") String token){
         Tracks tracks = new Tracks();
@@ -37,5 +37,5 @@ public class TracksInPlaylistController {
 
         return javax.ws.rs.core.Response.status(200).entity(tracks).build();
     }
-    }
+
 }

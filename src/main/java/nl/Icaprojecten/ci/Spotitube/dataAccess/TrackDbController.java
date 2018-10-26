@@ -63,6 +63,7 @@ public class TrackDbController {
 
     private Track trackBuilder(ResultSet rs) throws SQLException {
         //TODO fix database and replace the 1 on the end
+        //TODO fix database so that it accepts DD-MM-YYYY
             return new Track(rs.getInt("idTracks"),rs.getString("Title"),rs.getString("Preformer"),rs.getString("Album"),rs.getInt("Playcount"),rs.getString("PublicationDate"),rs.getString("Offlineplay"), 1);
     }
 }

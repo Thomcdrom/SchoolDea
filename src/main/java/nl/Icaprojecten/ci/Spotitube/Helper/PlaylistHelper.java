@@ -1,7 +1,7 @@
 package nl.Icaprojecten.ci.Spotitube.Helper;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
-import nl.Icaprojecten.ci.Spotitube.DTO.Playlists;
+import nl.Icaprojecten.ci.Spotitube.DTO.Collections.Playlists;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.IDNotEqualExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.PlaylistDbController;

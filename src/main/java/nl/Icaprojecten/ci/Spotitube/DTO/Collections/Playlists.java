@@ -1,4 +1,6 @@
-package nl.Icaprojecten.ci.Spotitube.DTO;
+package nl.Icaprojecten.ci.Spotitube.DTO.Collections;
+
+import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 
 import java.util.ArrayList;
 

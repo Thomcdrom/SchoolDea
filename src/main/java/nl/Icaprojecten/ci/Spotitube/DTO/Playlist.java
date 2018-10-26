@@ -1,15 +1,15 @@
 package nl.Icaprojecten.ci.Spotitube.DTO;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Playlist {
 
     private int id;
     private String name;
     private boolean owner;
-    private List<Track> tracks;
+    private ArrayList<Track> tracks;
 
-    public Playlist(int id, String name, boolean owner, List<Track> tracks) {
+    public Playlist(int id, String name, boolean owner, ArrayList<Track> tracks) {
         this.id = id;
         this.name = name;
         this.owner = owner;
@@ -43,11 +43,11 @@ public class Playlist {
         this.owner = owner;
     }
 
-    public List<Track> getTracks() {
+    public ArrayList<Track> getTracks() {
         return tracks;
     }
 
-    public void setTracks(List<Track> tracks) {
+    public void setTracks(ArrayList<Track> tracks) {
         this.tracks = tracks;
     }
 }

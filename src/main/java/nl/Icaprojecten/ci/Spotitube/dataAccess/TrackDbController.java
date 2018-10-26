@@ -15,6 +15,12 @@ public class TrackDbController {
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
 
+    public Playlist getTracksFromPlaylist(int playlistID){
+        Playlist playlist = new Playlist();
+        playlist.setId(playlistID);
+        return this.getTracksFromPlaylist(playlist);
+    }
+
     public Playlist getTracksFromPlaylist(Playlist playlist){
         ArrayList<Track> tracks = new ArrayList<>();
         Connection connection = jdbcConnectionFactory.create();

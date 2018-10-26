@@ -2,6 +2,9 @@ package nl.Icaprojecten.ci.Spotitube.dataAccess;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotFoundExeption;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotRemovedExeption;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -61,7 +64,7 @@ public class TrackDbController {
         return tracks;
     }
 
-    public void deleteTrackFromPlaylist(int trackID, int playlistID){
+    public void deleteTrackFromPlaylist(int trackID, int playlistID) throws TrackNotRemovedExeption {
         Connection connection = jdbcConnectionFactory.create();
 
         try{
@@ -72,8 +75,39 @@ public class TrackDbController {
             int count = preparedStatement.executeUpdate();
 
             if(count <=0){
-                //TODO return Exeption here
+                throw new TrackNotRemovedExeption();
             }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void insertTrackIntoPlaylist(Track track, int playlistID) throws TrackNotFoundExeption, TrackNotCoupledExeption{
+        Connection connection = jdbcConnectionFactory.create();
+
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT 1 FROM Track WHERE idTrack = ?");
+            preparedStatement.setInt(1,track.getIdTrack());
+
+            int count = preparedStatement.executeUpdate();
+
+            if(count <=0){
+                throw new TrackNotFoundExeption();
+            }
+
+            preparedStatement = connection.prepareStatement("INSERT INTO Playlist_has_Tracks (Playlist_idPlaylist, Tracks_idTracks) VALUES(?,?);");
+            preparedStatement.setInt(1,track.getIdTrack());
+            //TODO add onwer here (can't right now due to database refactor)
+            preparedStatement.setInt(2,playlistID);
+
+            count = preparedStatement.executeUpdate();
+
+            if(count <=0){
+                throw new TrackNotCoupledExeption();
+            }
+
+            connection.close();
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

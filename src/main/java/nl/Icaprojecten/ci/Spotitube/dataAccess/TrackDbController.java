@@ -21,7 +21,7 @@ public class TrackDbController {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT idTracks, Title, Preformer, Album, Playcount, PublicationDate, Offlineplay FROM Tracks INNER JOIN Playlist_has_Tracks ON Tracks.idTracks = Playlist_has_Tracks.Tracks_idTracks Where Playlist_idPlaylist  = ?");
-            preparedStatement.setInt(1,playlist.getID());
+            preparedStatement.setInt(1,playlist.getId());
 
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
@@ -33,6 +33,26 @@ public class TrackDbController {
             System.out.println(e.getMessage());
         }
         return playlist;
+    }
+
+    public ArrayList<Track> getAvalibleTracks(int playlistID){
+        ArrayList<Track> tracks = new ArrayList<>();
+        Connection connection = jdbcConnectionFactory.create();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idTracks, Title, Preformer, Album, Playcount, PublicationDate, Offlineplay FROM Tracks  inner JOIN Playlist_has_Tracks ON Tracks.idTracks = Playlist_has_Tracks.Tracks_idTracks Where Playlist_idPlaylist  != ?;");
+            preparedStatement.setInt(1, playlistID);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                tracks.add(trackBuilder(rs));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return tracks;
     }
 
     private Track trackBuilder(ResultSet rs) throws SQLException {

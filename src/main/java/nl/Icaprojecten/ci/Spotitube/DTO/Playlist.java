@@ -4,27 +4,27 @@ import java.util.List;
 
 public class Playlist {
 
-    private int ID;
+    private int id;
     private String name;
-    private int ownerid;
+    private boolean owner;
     private List<Track> tracks;
 
-    public Playlist(int ID, String name, int owner, List<Track> tracks) {
-        this.ID = ID;
+    public Playlist(int id, String name, boolean owner, List<Track> tracks) {
+        this.id = id;
         this.name = name;
-        this.ownerid = owner;
+        this.owner = owner;
         this.tracks = tracks;
     }
 
     public Playlist() {
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -35,12 +35,12 @@ public class Playlist {
         this.name = name;
     }
 
-    public int getOwnerid() {
-        return ownerid;
+    public boolean getOwner() {
+        return owner;
     }
 
-    public void setOwnerid(int ownerid) {
-        this.ownerid = ownerid;
+    public void setOwner(boolean owner) {
+        this.owner = owner;
     }
 
     public List<Track> getTracks() {

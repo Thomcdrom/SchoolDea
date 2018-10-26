@@ -3,6 +3,7 @@ package nl.Icaprojecten.ci.Spotitube.Helper;
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlists;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.IDNotEqualExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.PlaylistDbController;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.TrackDbController;
 
@@ -17,6 +18,11 @@ public class PlaylistHelper {
     @Inject
     PlaylistDbController playlistdb;
 
+    public void sameID(int ID, Playlist playlist) throws IDNotEqualExeption{
+        if(ID != playlist.getId()){
+            throw new IDNotEqualExeption();
+        }
+    }
 
     public Playlists playlistCreator(String token){
         Playlists playlists = new Playlists();
@@ -30,7 +36,7 @@ public class PlaylistHelper {
         return playlists;
     }
 
-    public int calculateLenght(ArrayList<Playlist> playlistHelpers){
+    private int calculateLenght(ArrayList<Playlist> playlistHelpers){
         int lenght = 0;
         for(Playlist playlist : playlistHelpers){
             for(Track track: playlist.getTracks()){

@@ -2,6 +2,7 @@ package nl.Icaprojecten.ci.Spotitube.dataAccess;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.TrackMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotRemovedExeption;
@@ -17,6 +18,9 @@ public class TrackDbController {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
+
+    @Inject
+    private TrackMapper trackMapper;
 
     public Playlist getTracksFromPlaylist(int playlistID){
         Playlist playlist = new Playlist();
@@ -34,7 +38,7 @@ public class TrackDbController {
 
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
-                tracks.add(trackBuilder(rs));
+                tracks.add(trackMapper.create(rs));
             }
             playlist.setTracks(tracks);
         }
@@ -54,7 +58,7 @@ public class TrackDbController {
 
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
-                tracks.add(trackBuilder(rs));
+                tracks.add(trackMapper.create(rs));
             }
         }
         catch (SQLException e) {
@@ -96,10 +100,10 @@ public class TrackDbController {
                 throw new TrackNotFoundExeption();
             }
 
-            preparedStatement = connection.prepareStatement("INSERT INTO Playlist_has_Tracks (Playlist_idPlaylist, Tracks_idTracks) VALUES(?,?);");
+            preparedStatement = connection.prepareStatement("INSERT INTO Playlist_has_Tracks (Playlist_idPlaylist, Tracks_idTracks, Offlineplay) VALUES(?,?,?);");
             preparedStatement.setInt(1,track.getIdTrack());
-            //TODO add onwer here (can't right now due to database refactor)
             preparedStatement.setInt(2,playlistID);
+            preparedStatement.setBoolean(3,track.getOfflineplay());
 
             count = preparedStatement.executeUpdate();
 
@@ -112,11 +116,5 @@ public class TrackDbController {
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    private Track trackBuilder(ResultSet rs) throws SQLException {
-        //TODO fix database and replace the 1 on the end
-        //TODO fix database so that it accepts DD-MM-YYYY
-            return new Track(rs.getInt("idTracks"),rs.getString("Title"),rs.getString("Preformer"),rs.getString("Album"),rs.getInt("Playcount"),rs.getString("PublicationDate"),rs.getString("Offlineplay"), 1);
     }
 }

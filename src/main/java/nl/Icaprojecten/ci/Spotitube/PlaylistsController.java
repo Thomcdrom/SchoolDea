@@ -77,7 +77,7 @@ public class PlaylistsController {
             authHelper.CheckToken(token);
 
             helper.sameID(ID, playlist);
-            playlistdb.updatePlaylist(playlist);
+            playlistdb.updatePlaylist(playlist, token);
 
         }
         catch (TokenNotFoundExeption e){ return Response.status(403).entity("Invalid token").build();}

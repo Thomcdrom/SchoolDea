@@ -1,6 +1,7 @@
 package nl.Icaprojecten.ci.Spotitube.dataAccess;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.User;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.UserMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
 
@@ -15,6 +16,9 @@ public class UserDbController {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
+
+    @Inject
+    private UserMapper userMapper;
 
     public boolean validateUser(String token) throws TokenNotFoundExeption{
         Connection connection = jdbcConnectionFactory.create();
@@ -50,7 +54,7 @@ public class UserDbController {
 
             ResultSet rs = preparedStatement.executeQuery();
             rs.first();
-            user = userBuilder(rs);
+            user = userMapper.create(rs);
             connection.close();
 
             insertUserToken(user);
@@ -82,9 +86,4 @@ public class UserDbController {
         }
 
     }
-
-    private User userBuilder(ResultSet rs) throws SQLException {
-            return new User(rs.getString("Password"),rs.getString("Username"),rs.getString("Name"));
-    }
-
 }

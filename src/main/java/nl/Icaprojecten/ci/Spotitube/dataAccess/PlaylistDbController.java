@@ -2,6 +2,7 @@ package nl.Icaprojecten.ci.Spotitube.dataAccess;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.PlaylistMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotDeletedExpetion;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotUpdatedExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
@@ -15,6 +16,9 @@ public class PlaylistDbController {
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
 
+    @Inject
+    private PlaylistMapper playlistMapper;
+
     public ArrayList<Playlist> getPlaylists(String token){
         ArrayList<Playlist> playlists = new ArrayList<>();
         Connection connection = jdbcConnectionFactory.create();
@@ -25,7 +29,7 @@ public class PlaylistDbController {
 
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
-                playlists.add(playlistBuilder(rs));
+                playlists.add(playlistMapper.create(rs));
             }
         }
         catch (SQLException e) {
@@ -37,7 +41,6 @@ public class PlaylistDbController {
 
     public void deletePlaylist( int playlistID, String token) throws PlaylistNotDeletedExpetion{
         Connection connection = jdbcConnectionFactory.create();
-//TODO Add Owner check when database allows
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM User_has_Playlist where Playlist_idPlaylist = ? and User_idUser = (Select idUser FROM user where UUID = ?) ");
             preparedStatement.setInt(1, playlistID);
@@ -49,7 +52,7 @@ public class PlaylistDbController {
                 throw new PlaylistNotDeletedExpetion();
             }
 
-            if(isAlone(playlistID)) {
+            if(isAlone(playlistID) && isOwner(playlistID, token)) {
                 preparedStatement = connection.prepareStatement("DELETE FROM Playlist_has_Tracks where Playlist_idPlaylist = ? ");
                 preparedStatement.setInt(1, playlistID);
                 preparedStatement.executeUpdate();
@@ -69,53 +72,53 @@ public class PlaylistDbController {
     public void createPlaylist(Playlist playlist, String token) throws PlaylistNotDeletedExpetion, TrackNotCoupledExeption {
         Connection connection = jdbcConnectionFactory.create();
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Playlist (idPlaylist,name) Value (?, ?); ");
-            preparedStatement.setInt(1,playlist.getId());
-            preparedStatement.setString(2,playlist.getName());
-            //TODO add owner here
+            if(isOwner(playlist, token)) {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Playlist (idPlaylist,name) Value (?, ?); ");
+                preparedStatement.setInt(1, playlist.getId());
+                preparedStatement.setString(2, playlist.getName());
 
-            int count = preparedStatement.executeUpdate();
+                int count = preparedStatement.executeUpdate();
 
-             preparedStatement = connection.prepareStatement("INSERT INTO User_has_Playlist (User_idUser, Playlist_idPlaylist) VALUES ((Select idUser FROM user where UUID = ?),?);");
-             preparedStatement.setString(1,token);
-             preparedStatement.setInt(2,playlist.getId());
+                preparedStatement = connection.prepareStatement("INSERT INTO User_has_Playlist (User_idUser, Playlist_idPlaylist) VALUES ((Select idUser FROM user where UUID = ?),?);");
+                preparedStatement.setString(1, token);
+                preparedStatement.setInt(2, playlist.getId());
 
-             count += preparedStatement.executeUpdate();
+                count += preparedStatement.executeUpdate();
 
-             if(count <= 1){
-                 throw new PlaylistNotDeletedExpetion();
-             }
+                if (count <= 1) {
+                    throw new PlaylistNotDeletedExpetion();
+                }
 
-             count = 0;
+                count = 0;
 
-
-
+            }
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void updatePlaylist(Playlist playlist) throws PlaylistNotUpdatedExeption, TrackNotCoupledExeption{
+    public void updatePlaylist(Playlist playlist, String token) throws PlaylistNotUpdatedExeption, TrackNotCoupledExeption{
         Connection connection = jdbcConnectionFactory.create();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Playlist SET Name = ? WHERE idPlaylist = ?");
-            preparedStatement.setString(1,playlist.getName());
-            preparedStatement.setInt(2, playlist.getId());
-            //TODO add owner here
+            if(isOwner(playlist, token)) {
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Playlist SET Name = ? WHERE idPlaylist = ?");
+                preparedStatement.setString(1, playlist.getName());
+                preparedStatement.setInt(2, playlist.getId());
 
-            int count = preparedStatement.executeUpdate();
+                int count = preparedStatement.executeUpdate();
 
-            if(count <= 1){
-                throw new PlaylistNotUpdatedExeption();
-            }
+                if (count <= 1) {
+                    throw new PlaylistNotUpdatedExeption();
+                }
 
-            if(playlist.getTracks().size() >0){
-                preparedStatement = connection.prepareStatement("DELETE FROM  Playlist_has_Tracks where Playlist_idPlaylist = ?;");
-                preparedStatement.setInt(1, playlist.getId());
-                preparedStatement.executeUpdate();
+                if (playlist.getTracks().size() > 0) {
+                    preparedStatement = connection.prepareStatement("DELETE FROM  Playlist_has_Tracks where Playlist_idPlaylist = ?;");
+                    preparedStatement.setInt(1, playlist.getId());
+                    preparedStatement.executeUpdate();
 
-                insertTracks(playlist);
+                    insertTracks(playlist);
+                }
             }
             connection.close();
         }
@@ -150,6 +153,27 @@ public class PlaylistDbController {
         return false;
     }
 
+    private boolean isOwner(Playlist playlist, String token){
+        return this.isOwner(playlist.getId(), token);
+    }
+
+    private boolean isOwner(int playlistID, String token){
+        Connection connection = jdbcConnectionFactory.create();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT Owner FROM User_has_Playlist WHERE Playlist_idPlaylist = ? AND User_idUser = (Select idUser FROM user where UUID = ?)");
+            preparedStatement.setInt(1, playlistID);
+            preparedStatement.setString(2,token);
+            ResultSet res = preparedStatement.executeQuery();
+
+            return res.getBoolean("Owner");
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
     private void insertTracks(Playlist playlist) throws TrackNotCoupledExeption{
         Connection connection = jdbcConnectionFactory.create();
         try {
@@ -169,10 +193,5 @@ public class PlaylistDbController {
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    private Playlist playlistBuilder(ResultSet rs) throws SQLException {
-        //TODO add owner field
-        return new Playlist(rs.getInt("idPlaylist"), rs.getString("Name"), false, new ArrayList<Track>());
     }
 }

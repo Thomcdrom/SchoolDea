@@ -1,4 +1,4 @@
-package nl.Icaprojecten.ci.Spotitube;
+package nl.Icaprojecten.ci.Spotitube.Controller;
 
 import javax.inject.Inject;
 import javax.json.Json;

@@ -1,4 +1,4 @@
-package nl.Icaprojecten.ci.Spotitube;
+package nl.Icaprojecten.ci.Spotitube.Controller;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
 import nl.Icaprojecten.ci.Spotitube.Helper.IAuthHelper;

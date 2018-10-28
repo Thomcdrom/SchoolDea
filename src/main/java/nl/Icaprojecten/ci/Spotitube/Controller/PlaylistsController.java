@@ -1,4 +1,4 @@
-package nl.Icaprojecten.ci.Spotitube;
+package nl.Icaprojecten.ci.Spotitube.Controller;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.Helper.IAuthHelper;
@@ -48,7 +48,7 @@ public class PlaylistsController {
 
         }
         catch (TokenNotFoundExeption e){ return Response.status(403).entity("Invalid token").build();}
-        catch (PlaylistNotDeletedExpetion | TrackNotCoupledExeption e){ return Response.status(500).entity(e.getMessage()).build();}
+        catch (PlaylistNotCreatedExpetion | TrackNotCoupledExeption e){ return Response.status(500).entity(e.getMessage()).build();}
 
         return Response.status(201).entity(helper.playlistCreator(token)).build();
     }

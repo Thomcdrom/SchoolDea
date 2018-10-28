@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class UserRepository {
+public class UserRepository implements IUserRepository {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;

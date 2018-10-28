@@ -6,5 +6,5 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface IPlaylistMapper  {
-    public Playlist create(ResultSet rs) throws SQLException;
+     Playlist create(ResultSet rs) throws SQLException;
 }

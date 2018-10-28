@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TrackRepository {
+public class TrackRepository implements ITrackRepository{
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;

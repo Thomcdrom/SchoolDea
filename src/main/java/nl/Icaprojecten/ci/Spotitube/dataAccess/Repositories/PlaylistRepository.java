@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class PlaylistRepository {
+public class PlaylistRepository implements IPlaylistRepository {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
@@ -70,7 +70,7 @@ public class PlaylistRepository {
         }
     }
 
-    public void createPlaylist(Playlist playlist, String token) throws PlaylistNotDeletedExpetion, TrackNotCoupledExeption {
+    public void createPlaylist(Playlist playlist, String token) throws PlaylistNotDeletedExpetion {
         Connection connection = jdbcConnectionFactory.create();
         try{
             if(isOwner(playlist, token)) {

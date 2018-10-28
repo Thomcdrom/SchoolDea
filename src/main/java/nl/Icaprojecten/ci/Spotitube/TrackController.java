@@ -3,7 +3,7 @@ package nl.Icaprojecten.ci.Spotitube;
 import nl.Icaprojecten.ci.Spotitube.DTO.Collections.Tracks;
 import nl.Icaprojecten.ci.Spotitube.Helper.AuthHelper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.TrackRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.ITrackRepository;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -18,7 +18,7 @@ public class TrackController {
     AuthHelper authHelper;
 
     @Inject
-    TrackRepository trackDb;
+    ITrackRepository trackDb;
 
     @Path("/")
     @GET

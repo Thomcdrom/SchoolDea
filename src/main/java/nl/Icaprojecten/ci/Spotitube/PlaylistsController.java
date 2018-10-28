@@ -4,7 +4,8 @@ import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.Helper.AuthHelper;
 import nl.Icaprojecten.ci.Spotitube.Helper.PlaylistHelper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.*;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.PlaylistRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.IPlaylistRepository;
+
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,8 +15,8 @@ import javax.ws.rs.core.Response;
 @Path("playlists")
 public class PlaylistsController {
 
-   @Inject
-   PlaylistRepository playlistdb;
+    @Inject
+    IPlaylistRepository playlistdb;
 
     @Inject
     PlaylistHelper helper;

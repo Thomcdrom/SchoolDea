@@ -6,7 +6,7 @@ import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.IPlaylistMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotDeletedExpetion;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotUpdatedExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.JdbcConnectionFactory;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.IJdbcConnection;
 
 import javax.inject.Inject;
 import java.sql.*;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PlaylistRepository implements IPlaylistRepository {
 
     @Inject
-    private JdbcConnectionFactory jdbcConnectionFactory;
+    private IJdbcConnection jdbcConnectionFactory;
 
     @Inject
     private IPlaylistMapper playlistMapper;

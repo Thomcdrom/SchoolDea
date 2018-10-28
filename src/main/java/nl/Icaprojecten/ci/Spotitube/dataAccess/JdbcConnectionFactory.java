@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class JdbcConnectionFactory {
+public class JdbcConnectionFactory implements IJdbcConnection {
     private Properties properties;
 
     public JdbcConnectionFactory()

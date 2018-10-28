@@ -6,7 +6,7 @@ import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.ITrackMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotRemovedExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.JdbcConnectionFactory;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.IJdbcConnection;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class TrackRepository implements ITrackRepository{
 
     @Inject
-    private JdbcConnectionFactory jdbcConnectionFactory;
+    private IJdbcConnection jdbcConnectionFactory;
 
     @Inject
     private ITrackMapper trackMapper;

@@ -1,14 +1,14 @@
 package nl.Icaprojecten.ci.Spotitube.Helper;
 
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.UserRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.IUserRepository;
 
 import javax.inject.Inject;
 
-public class AuthHelper {
+public class AuthHelper implements IAuthHelper {
 
     @Inject
-    UserRepository userRepository;
+    private IUserRepository userRepository;
 
     public void CheckToken(String token) throws TokenNotFoundExeption {
         userRepository.validateUser(token);

@@ -2,15 +2,15 @@ package nl.Icaprojecten.ci.Spotitube.Helper;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Collections.Tracks;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.TrackRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.ITrackRepository;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 
-public class TrackHelper {
+public class TrackHelper implements ITrackHelper {
 
     @Inject
-    TrackRepository trackDb;
+    ITrackRepository trackDb;
 
     public Tracks trackCreator(int playlistID){
         Tracks tracks = new Tracks();

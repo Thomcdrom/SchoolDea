@@ -4,19 +4,19 @@ import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Collections.Playlists;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.IDNotEqualExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.PlaylistRepository;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.TrackRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.IPlaylistRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.ITrackRepository;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 
-public class PlaylistHelper {
+public class PlaylistHelper implements IPlaylistHelper{
 
     @Inject
-    TrackRepository trackdb;
+    ITrackRepository trackdb;
 
     @Inject
-    PlaylistRepository playlistdb;
+    IPlaylistRepository playlistdb;
 
     public void sameID(int ID, Playlist playlist) throws IDNotEqualExeption{
         if(ID != playlist.getId()){

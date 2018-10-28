@@ -1,8 +1,8 @@
 package nl.Icaprojecten.ci.Spotitube;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
-import nl.Icaprojecten.ci.Spotitube.Helper.AuthHelper;
-import nl.Icaprojecten.ci.Spotitube.Helper.TrackHelper;
+import nl.Icaprojecten.ci.Spotitube.Helper.IAuthHelper;
+import nl.Icaprojecten.ci.Spotitube.Helper.ITrackHelper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotFoundExeption;
@@ -18,10 +18,10 @@ import javax.ws.rs.core.Response;
 public class TracksInPlaylistController {
 
     @Inject
-    AuthHelper authHelper;
+    IAuthHelper authHelper;
 
     @Inject
-    TrackHelper helper;
+    ITrackHelper helper;
 
     @Inject
     ITrackRepository trackDb;

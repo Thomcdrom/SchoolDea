@@ -4,7 +4,7 @@ import nl.Icaprojecten.ci.Spotitube.DTO.User;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.IUsecaeMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.JdbcConnectionFactory;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.IJdbcConnection;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class UserRepository implements IUserRepository {
 
     @Inject
-    private JdbcConnectionFactory jdbcConnectionFactory;
+    private IJdbcConnection jdbcConnectionFactory;
 
     @Inject
     private IUsecaeMapper userMapper;

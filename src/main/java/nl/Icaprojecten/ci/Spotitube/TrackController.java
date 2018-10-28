@@ -1,7 +1,7 @@
 package nl.Icaprojecten.ci.Spotitube;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Collections.Tracks;
-import nl.Icaprojecten.ci.Spotitube.Helper.AuthHelper;
+import nl.Icaprojecten.ci.Spotitube.Helper.IAuthHelper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.ITrackRepository;
 
@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 public class TrackController {
 
     @Inject
-    AuthHelper authHelper;
+    IAuthHelper authHelper;
 
     @Inject
     ITrackRepository trackDb;

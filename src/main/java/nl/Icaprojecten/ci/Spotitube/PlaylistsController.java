@@ -1,8 +1,8 @@
 package nl.Icaprojecten.ci.Spotitube;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
-import nl.Icaprojecten.ci.Spotitube.Helper.AuthHelper;
-import nl.Icaprojecten.ci.Spotitube.Helper.PlaylistHelper;
+import nl.Icaprojecten.ci.Spotitube.Helper.IAuthHelper;
+import nl.Icaprojecten.ci.Spotitube.Helper.IPlaylistHelper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.*;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.IPlaylistRepository;
 
@@ -19,10 +19,10 @@ public class PlaylistsController {
     IPlaylistRepository playlistdb;
 
     @Inject
-    PlaylistHelper helper;
+    IPlaylistHelper helper;
 
     @Inject
-    AuthHelper authHelper;
+    IAuthHelper authHelper;
 
     @Path("/")
     @GET

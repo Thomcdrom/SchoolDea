@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PlaylistMapper implements Imapper {
+public class PlaylistMapper implements IPlaylistMapper{
 
     public Playlist create(ResultSet rs) throws SQLException {
         Playlist playlist = new Playlist();

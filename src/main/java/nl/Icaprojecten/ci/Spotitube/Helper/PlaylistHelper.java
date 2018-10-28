@@ -4,8 +4,8 @@ import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Collections.Playlists;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.IDNotEqualExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.PlaylistDbController;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.TrackDbController;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.PlaylistRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.TrackRepository;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class PlaylistHelper {
 
     @Inject
-    TrackDbController trackdb;
+    TrackRepository trackdb;
 
     @Inject
-    PlaylistDbController playlistdb;
+    PlaylistRepository playlistdb;
 
     public void sameID(int ID, Playlist playlist) throws IDNotEqualExeption{
         if(ID != playlist.getId()){

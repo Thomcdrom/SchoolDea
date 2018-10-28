@@ -1,9 +1,10 @@
-package nl.Icaprojecten.ci.Spotitube.dataAccess;
+package nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.User;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.UserMapper;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.IUsecaeMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.JdbcConnectionFactory;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -12,13 +13,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class UserDbController {
+public class UserRepository {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
 
     @Inject
-    private UserMapper userMapper;
+    private IUsecaeMapper userMapper;
 
     public boolean validateUser(String token) throws TokenNotFoundExeption{
         Connection connection = jdbcConnectionFactory.create();

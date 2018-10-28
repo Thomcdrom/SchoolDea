@@ -1,11 +1,12 @@
-package nl.Icaprojecten.ci.Spotitube.dataAccess;
+package nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.TrackMapper;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.ITrackMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotRemovedExeption;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.JdbcConnectionFactory;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -14,13 +15,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TrackDbController {
+public class TrackRepository {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
 
     @Inject
-    private TrackMapper trackMapper;
+    private ITrackMapper trackMapper;
 
     public Playlist getTracksFromPlaylist(int playlistID){
         Playlist playlist = new Playlist();

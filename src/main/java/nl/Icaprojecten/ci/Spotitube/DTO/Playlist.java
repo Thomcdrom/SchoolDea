@@ -2,7 +2,7 @@ package nl.Icaprojecten.ci.Spotitube.DTO;
 
 import java.util.ArrayList;
 
-public class Playlist implements IDTO {
+public class Playlist {
 
     private int id;
     private String name;

@@ -2,7 +2,7 @@ package nl.Icaprojecten.ci.Spotitube.DTO;
 
 import java.util.UUID;
 
-public class User implements IDTO{
+public class User {
     private String user;
     private String password;
     private String name;

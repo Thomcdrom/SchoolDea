@@ -11,13 +11,13 @@ import javax.ws.rs.core.Response;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.User;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.UserDbController;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.UserRepository;
 
 @Path("login")
     public class LoginController {
 
     @Inject
-    private UserDbController database;
+    private UserRepository database;
 
         @Path("/")
         @POST

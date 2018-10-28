@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class UserMapper implements Imapper {
+public class UserMapper implements IUsecaeMapper{
 
     public User create(ResultSet rs) throws SQLException {
         User user = new User();

@@ -1,23 +1,24 @@
-package nl.Icaprojecten.ci.Spotitube.dataAccess;
+package nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.PlaylistMapper;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.IPlaylistMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotDeletedExpetion;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotUpdatedExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.JdbcConnectionFactory;
 
 import javax.inject.Inject;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class PlaylistDbController {
+public class PlaylistRepository {
 
     @Inject
     private JdbcConnectionFactory jdbcConnectionFactory;
 
     @Inject
-    private PlaylistMapper playlistMapper;
+    private IPlaylistMapper playlistMapper;
 
     public ArrayList<Playlist> getPlaylists(String token){
         ArrayList<Playlist> playlists = new ArrayList<>();

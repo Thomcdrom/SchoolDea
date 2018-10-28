@@ -2,7 +2,7 @@ package nl.Icaprojecten.ci.Spotitube.DTO;
 
 import java.util.Date;
 
-public class Track implements IDTO{
+public class Track {
     private int idTrack;
     private String title;
     private String performer;

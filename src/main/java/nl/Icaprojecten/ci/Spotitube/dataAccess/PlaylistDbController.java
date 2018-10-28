@@ -7,7 +7,6 @@ import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotUpdatedExept
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import java.sql.*;
 import java.util.ArrayList;
 

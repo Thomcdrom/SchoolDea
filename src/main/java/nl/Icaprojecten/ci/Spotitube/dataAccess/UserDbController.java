@@ -87,7 +87,4 @@ public class UserDbController {
             return new User(rs.getString("Password"),rs.getString("Username"),rs.getString("Name"));
     }
 
-    //TODO write user queries
-    //TODO make connection with the database
-    //TODO make DTO builder service
 }

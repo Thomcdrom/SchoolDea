@@ -32,6 +32,6 @@ public class TrackController {
             tracks.setTracks(trackDb.getAvalibleTracks(playlistID));
         }catch (TokenNotFoundExeption e){ return Response.status(403).entity("Invalid token").build();}
 
-        return javax.ws.rs.core.Response.status(200).entity(tracks).build();
+        return Response.status(200).entity(tracks).build();
     }
 }

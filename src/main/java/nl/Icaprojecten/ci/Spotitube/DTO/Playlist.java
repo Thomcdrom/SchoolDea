@@ -2,19 +2,12 @@ package nl.Icaprojecten.ci.Spotitube.DTO;
 
 import java.util.ArrayList;
 
-public class Playlist {
+public class Playlist implements IDTO {
 
     private int id;
     private String name;
     private boolean owner;
     private ArrayList<Track> tracks;
-
-    public Playlist(int id, String name, boolean owner, ArrayList<Track> tracks) {
-        this.id = id;
-        this.name = name;
-        this.owner = owner;
-        this.tracks = tracks;
-    }
 
     public Playlist() {
     }

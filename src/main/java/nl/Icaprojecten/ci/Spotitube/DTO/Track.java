@@ -1,25 +1,16 @@
 package nl.Icaprojecten.ci.Spotitube.DTO;
 
-public class Track {
+import java.util.Date;
+
+public class Track implements IDTO{
     private int idTrack;
     private String title;
     private String performer;
     private String album;
     private int playcount;
-    private String publicationDate;
-    private String offlineplay;
+    private Date publicationDate;
+    private Boolean offlineplay;
     private int lenght;
-
-    public Track(int idTrack, String title, String performer, String album, int playcount, String publicationDate, String offlineplay, int lenght) {
-        this.idTrack = idTrack;
-        this.title = title;
-        this.performer = performer;
-        this.album = album;
-        this.playcount = playcount;
-        this.publicationDate = publicationDate;
-        this.offlineplay = offlineplay;
-        this.lenght = lenght;
-    }
 
     public Track() {
     }
@@ -64,19 +55,19 @@ public class Track {
         this.playcount = playcount;
     }
 
-    public String getPublicationDate() {
+    public Date getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
     }
 
-    public String getOfflineplay() {
+    public boolean getOfflineplay() {
         return offlineplay;
     }
 
-    public void setOfflineplay(String offlineplay) {
+    public void setOfflineplay(boolean offlineplay) {
         this.offlineplay = offlineplay;
     }
 

@@ -2,18 +2,11 @@ package nl.Icaprojecten.ci.Spotitube.DTO;
 
 import java.util.UUID;
 
-public class User {
+public class User implements IDTO{
     private String user;
     private String password;
     private String name;
     private java.util.UUID token;
-
-    public User(String password, String user, String name) {
-        this.user = user;
-        this.password = password;
-        this.name = name;
-        this.token = generateToken();
-    }
 
     public User() {
     }

@@ -7,7 +7,7 @@ import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotRemovedExeption;
-import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.TrackRepository;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.ITrackRepository;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -24,7 +24,7 @@ public class TracksInPlaylistController {
     TrackHelper helper;
 
     @Inject
-    TrackRepository trackDb;
+    ITrackRepository trackDb;
 
     @Path("/")
     @GET

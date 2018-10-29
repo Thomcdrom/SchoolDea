@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 
 import nl.Icaprojecten.ci.Spotitube.DTO.User;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotValidExpetion;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.IUserRepository;
 
 @Path("login")
@@ -31,8 +32,11 @@ import nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories.IUserRepository;
                         .add("user", loginUser.getName())
                         .build()).build();
             }
-            catch (UserNotUpdatedExeption e){
+            catch (UserNotUpdatedExeption | UserNotValidExpetion e){
                 return Response.status(401).entity(e.getMessage()).build();
+            }
+            catch (NullPointerException e){
+                return Response.status(500).entity(e.getMessage()).build();
             }
         }
     }

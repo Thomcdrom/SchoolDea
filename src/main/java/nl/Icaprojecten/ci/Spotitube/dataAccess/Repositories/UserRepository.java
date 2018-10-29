@@ -4,6 +4,7 @@ import nl.Icaprojecten.ci.Spotitube.DTO.User;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.IUsecaeMapper;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TokenNotFoundExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotUpdatedExeption;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.UserNotValidExpetion;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.IJdbcConnection;
 
 import javax.inject.Inject;
@@ -45,7 +46,7 @@ public class UserRepository implements IUserRepository {
         return true;
     }
 
-    public User checkLoginDetails(User user) throws UserNotUpdatedExeption{
+    public User checkLoginDetails(User user) throws UserNotUpdatedExeption, UserNotValidExpetion{
         Connection connection = jdbcConnectionFactory.create();
 
         try {
@@ -56,6 +57,9 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = preparedStatement.executeQuery();
             rs.first();
             user = userMapper.create(rs);
+            if(user.getToken() == null){
+                throw new UserNotValidExpetion();
+            }
             connection.close();
 
             insertUserToken(user);

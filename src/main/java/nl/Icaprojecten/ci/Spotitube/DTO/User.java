@@ -28,6 +28,7 @@ public class User {
     }
 
     public UUID getToken() {
+        token = generateToken();
         return token;
     }
 

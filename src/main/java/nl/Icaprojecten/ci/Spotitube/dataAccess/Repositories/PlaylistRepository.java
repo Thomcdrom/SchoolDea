@@ -3,6 +3,7 @@ package nl.Icaprojecten.ci.Spotitube.dataAccess.Repositories;
 import nl.Icaprojecten.ci.Spotitube.DTO.Playlist;
 import nl.Icaprojecten.ci.Spotitube.DTO.Track;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.DataMapper.IPlaylistMapper;
+import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotCreatedExpetion;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotDeletedExpetion;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.PlaylistNotUpdatedExeption;
 import nl.Icaprojecten.ci.Spotitube.dataAccess.Exeptions.TrackNotCoupledExeption;
@@ -70,7 +71,7 @@ public class PlaylistRepository implements IPlaylistRepository {
         }
     }
 
-    public void createPlaylist(Playlist playlist, String token) throws PlaylistNotDeletedExpetion {
+    public void createPlaylist(Playlist playlist, String token) throws PlaylistNotCreatedExpetion {
         Connection connection = jdbcConnectionFactory.create();
         try{
             if(isOwner(playlist, token)) {
@@ -87,7 +88,7 @@ public class PlaylistRepository implements IPlaylistRepository {
                 count += preparedStatement.executeUpdate();
 
                 if (count <= 1) {
-                    throw new PlaylistNotDeletedExpetion();
+                    throw new PlaylistNotCreatedExpetion();
                 }
 
                 count = 0;
